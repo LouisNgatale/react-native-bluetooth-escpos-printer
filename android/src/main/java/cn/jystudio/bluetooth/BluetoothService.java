@@ -295,10 +295,6 @@ public class BluetoothService {
                         bundle = new HashMap<String, Object>();
                         bundle.put("bytes", bytes);
                         infoObervers(MESSAGE_READ, bundle);
-                    } else {
-                        Log.e(TAG, "disconnected");
-                        connectionLost();
-                        break;
                     }
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);
