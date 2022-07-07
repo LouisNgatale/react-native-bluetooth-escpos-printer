@@ -539,8 +539,9 @@ RCT_EXPORT_METHOD(printQRCode:(NSString *)content
     if(error || !result){
         reject(@"ERROR_IN_CREATE_QRCODE",@"ERROR_IN_CREATE_QRCODE",nil);
     }else{
-        CGImageRef image = [[ZXImage imageWithMatrix:result] cgimage];
-        uint8_t * graImage = [ImageUtils imageToGreyImage:[UIImage imageWithCGImage:image]];
+        // CGImageRef image = [[ZXImage imageWithMatrix:result] cgimage];
+        // uint8_t * graImage = [ImageUtils imageToGreyImage:[UIImage imageWithCGImage:image]];
+        uint8_t * graImage = [ImageUtils imageToGreyImage:[[UIImage alloc] initWithCGImage:[[ZXImage imageWithMatrix:result] cgimage]]];
         unsigned char * formatedData = [ImageUtils format_K_threshold:graImage width:size height:size];
         NSData *dataToPrint = [ImageUtils eachLinePixToCmd:formatedData nWidth:size nHeight:size nMode:0];
         PrintImageBleWriteDelegate *delegate = [[PrintImageBleWriteDelegate alloc] init];
