@@ -343,7 +343,7 @@ public class RNBluetoothEscposPrinterModule extends ReactContextBaseJavaModule
             byte[] data = PrintPicture.POS_PrintBMP(mBitmap, width, nMode, leftPadding);
             //  SendDataByte(buffer);
             sendDataByte(Command.ESC_Init);
-            sendDataByte(Command.LF);
+            // sendDataByte(Command.LF);
             sendDataByte(data);
             sendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(30));
             sendDataByte(PrinterCommand.POS_Set_Cut(1));
