@@ -1,37 +1,41 @@
 buildscript {
     repositories {
-        jcenter { url "https://jcenter.bintray.com/" }
-        maven {url "https://repo.spring.io/plugins-release/"}
+        google()
         mavenCentral()
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
-        }
-        maven {
-            url 'https://maven.google.com'
-        }
+        // React Native Android artifacts from node_modules
+        maven { url "$rootDir/../node_modules/react-native/android" }
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        // Works well with RN projects on modern Gradle
+        classpath 'com.android.tools.build:gradle:7.0.4'
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 33
+    buildToolsVersion "33.0.0"
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 24
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
+
+        // If you have vector drawables in this lib
+        vectorDrawables.useSupportLibrary = true
     }
+
     lintOptions {
         abortOnError false
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     sourceSets {
         main {
             aidl.srcDirs = ['src/main/java']
@@ -40,21 +44,18 @@ android {
 }
 
 repositories {
-    jcenter { url "https://jcenter.bintray.com/" }
-    maven {url "https://repo.spring.io/plugins-release/"}
+    google()
     mavenCentral()
-    maven {
-        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-        url "$rootDir/../node_modules/react-native/android"
-    }
-    maven {
-        url 'https://maven.google.com'
-    }
+    // React Native Android artifacts from node_modules
+    maven { url "$rootDir/../node_modules/react-native/android" }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation group: 'com.android.support', name: 'support-v4', version: '27.0.0'
+
+    // Migrate from deprecated support-v4 to AndroidX
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
     implementation "com.google.zxing:core:3.3.0"
 }
